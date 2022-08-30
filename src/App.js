@@ -8,21 +8,29 @@ import {
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import AddIssue from './components/AddIssue';
+import NavBar from './components/NavBar';
+import { UserProvider } from './useContext';
+import { useState } from 'react';
+import Track from './components/Track';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")))
   return (
-    <div className="App">
+    <UserProvider user={currentUser}>
     
 
 <BrowserRouter>
+<NavBar />
     <Routes>
+      <Route element={<Login />} path="/" />
       <Route element={<Login />} path="signin" />
       <Route element={<SignUp />} path="signup" />
       <Route element={<AddIssue />} path="addissue" />
+      <Route element={<Track />} path="track" />
     </Routes>
 </BrowserRouter>
 
-    </div>
+    </UserProvider>
   );
 }
 

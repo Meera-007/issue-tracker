@@ -1,42 +1,43 @@
 import { TextField, Button } from "@mui/material";
 import { Formik } from "formik";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
 import "./login.css";
 
 const Login = () => {
-  
+  const navigate = useNavigate();
   const handleFormSubmit = (formdata) => {
     console.log("Form submitted!!");
     console.log(formdata);
 
-    fetch('http://localhost:5000/user/authenticate', {
-      method: 'POST',
-      body : JSON.stringify(formdata),
+    fetch("http://localhost:5000/user/authenticate", {
+      method: "POST",
+      body: JSON.stringify(formdata),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => {
-      if(res.status === 200){
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status === 200) {
         Swal.fire({
-          icon : 'success',
-          title : 'Success',
-          text : 'Login Successful'
+          icon: "success",
+          title: "Success",
+          text: "Login Successful",
+        });
+        res.json().then(data => {
+          sessionStorage.setItem('user', JSON.stringify(data));
+          navigate('/addissue');
         })
-        
-
-      }else if(res.status === 300){
+      } else if (res.status === 300) {
         Swal.fire({
-          icon : 'error',
-          title : 'Oops!!',
-          text : 'Invalid Credentials'
-        })
+          icon: "error",
+          title: "Oops!!",
+          text: "Invalid Credentials",
+        });
       }
-    })
-
+    });
   };
-
 
   // for validation
   const loginSchema = Yup.object().shape({
@@ -49,26 +50,47 @@ const Login = () => {
   return (
     <div className="wrapper">
       <div className="logo">
-          <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />
+        <img
+          src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png"
+          alt=""
+        />
       </div>
       <div className="text-center mt-4 name">Issue Tracker</div>
-      <form className="p-3 mt-3">
-        <div className="form-field d-flex align-items-center">
-            <span className="far fa-user"></span>
-            <input type="text" name="username" id="username" placeholder="Username"></input>
-        </div>
-        <div className="form-field d-flex align-items-center">
-            <span className="fas fa-key"></span>
-            <input type="password" name="password" id="pwd" placeholder="Password"></input>
-
-        </div>
-        <button className="btn mt-3">Login</button>
-      </form>
+      <Formik
+        initialValues={{ email: "", password: "" }} //specifying initial value for form
+        onSubmit={handleFormSubmit} // function to handle form submission
+        // validationSchema={loginSchema}
+      >
+        {({ values, handleChange, handleSubmit, errors, touched }) => (
+          <form onSubmit={handleSubmit} className="p-3 mt-3">
+            <div className="form-field d-flex align-items-center">
+              <span className="far fa-user"></span>
+              <input
+                type="text"
+                id="email"
+                value={values.email}
+                onChange={handleChange}
+                placeholder="Username"
+              ></input>
+            </div>
+            <div className="form-field d-flex align-items-center">
+              <span className="fas fa-key"></span>
+              <input
+                type="password"
+                id="password"
+                value={values.password}
+                onChange={handleChange}
+                placeholder="Password"
+              ></input>
+            </div>
+            <button className="btn mt-3">Login</button>
+          </form>
+        )}
+      </Formik>
       <div className="text-center fs-6">
-          <a href="#">Forgot Password?&nbsp;&nbsp;</a>
-          or &nbsp; <a href="#">Sign Up here</a>
+        <a href="#">Forgot Password?&nbsp;&nbsp;</a>
+        or &nbsp; <a href="#">Sign Up here</a>
       </div>
-
     </div>
 
     /*{} <div style={{ background: "#eee", height: "100vh", width : "50%", display: "flex", marginLeft : "22%"  }}>
@@ -129,7 +151,5 @@ const Login = () => {
     </div> }*/
   );
 };
-
-
 
 export default Login;

@@ -3,7 +3,7 @@ import React, { useContext} from "react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { UserContext } from "../useContext";
 
-const NavBar = ({ darkTheme, setDarkTheme }) => {
+const NavBar = () => {
 
   const navigate = useNavigate();
   
@@ -46,18 +46,14 @@ const NavBar = ({ darkTheme, setDarkTheme }) => {
           
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
             <li class="nav-item">
-              <NavLink className="nav-link" to="/Home">
-                Home
-              </NavLink>
-            </li>
-            <li class="nav-item">
-              <NavLink className="nav-link" to="/Login">
+              <NavLink className="nav-link" to="/signin">
                 Login
               </NavLink>
             </li>
             <li class="nav-item">
-              <NavLink className="nav-link" to="/Register">
+              <NavLink className="nav-link" to="/signup">
                 Register
               </NavLink>
             </li>
