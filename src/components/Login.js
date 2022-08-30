@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import React from "react";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
+import "./login.css";
 
 const Login = () => {
   
@@ -46,7 +47,31 @@ const Login = () => {
   });
 
   return (
-    <div style={{ background: "#eee", height: "100vh", width : "50%", display: "flex", marginLeft : "22%"  }}>
+    <div className="wrapper">
+      <div className="logo">
+          <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />
+      </div>
+      <div className="text-center mt-4 name">Issue Tracker</div>
+      <form className="p-3 mt-3">
+        <div className="form-field d-flex align-items-center">
+            <span className="far fa-user"></span>
+            <input type="text" name="username" id="username" placeholder="Username"></input>
+        </div>
+        <div className="form-field d-flex align-items-center">
+            <span className="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="Password"></input>
+
+        </div>
+        <button className="btn mt-3">Login</button>
+      </form>
+      <div className="text-center fs-6">
+          <a href="#">Forgot Password?&nbsp;&nbsp;</a>
+          or &nbsp; <a href="#">Sign Up here</a>
+      </div>
+
+    </div>
+
+    /*{} <div style={{ background: "#eee", height: "100vh", width : "50%", display: "flex", marginLeft : "22%"  }}>
       <div className="row h-100 justify-content-center align-items-center">
         <div className="col-md-3">
           <div className="card">
@@ -101,8 +126,10 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> }*/
   );
 };
+
+
 
 export default Login;
